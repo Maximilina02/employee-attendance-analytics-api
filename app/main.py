@@ -1157,7 +1157,10 @@ def employee_monthly_analytics(
 
           )
 
-          present = sum(d.get("status") == "PRESENT" for d in docs)
+          present = sum(
+              d.get("status") in ("PRESENT", "WFH", "ON_DUTY")
+              for d in docs
+          )
 
           absent = sum(d.get("status") == "ABSENT" for d in docs)
 
@@ -1323,7 +1326,9 @@ def department_summary():
 
                     entry["attendance_records"] += 1
 
-                    entry["present"] += record.get("status") == "PRESENT"
+                    entry["present"] += record.get("status") in (
+                        "PRESENT", "WFH", "ON_DUTY"
+                    )
 
                     entry["absent"] += record.get("status") == "ABSENT"
 
@@ -1557,7 +1562,9 @@ def department_trend(
 
                     entry["attendance_records"] += 1
 
-                    entry["present"] += doc.get("status") == "PRESENT"
+                    entry["present"] += doc.get("status") in (
+                        "PRESENT", "WFH", "ON_DUTY"
+                    )
 
                     entry["absent"] += doc.get("status") == "ABSENT"
 
