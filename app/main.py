@@ -816,33 +816,12 @@ def punch_out(body: PunchOutIn):
     )
 
     update = {
-
         "$set": {
-
             "punch_out": ts,
-
             "work_hours": work_hours,
-
             "overtime_minutes": overtime,
-
             "half_day": calculate_half_day(work_hours),
-
-        },
-
-        "$push": {
-
-            "history": {
-
-                "action": "PUNCH_OUT",
-
-                "at": now_utc(),
-
-                "punch_out": ts,
-
-            }
-
-        },
-
+        }
     }
 
     result = db.attendance_logs.update_one(
